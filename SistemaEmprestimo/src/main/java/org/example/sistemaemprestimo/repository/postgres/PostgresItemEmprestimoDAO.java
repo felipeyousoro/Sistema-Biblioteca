@@ -68,35 +68,6 @@ public class PostgresItemEmprestimoDAO implements ItemEmprestimoDAO {
         return null;
     }
 
-    public List<ItemEmprestimo> findByIdEmprestimo(int idEmprestimo) {
-        List<ItemEmprestimo> itensEmprestimo = new ArrayList<>();
-        try {
-            Connection connection = PostgresConnection.getConnection();
-
-            String sql = "SELECT * FROM ItemEmprestimo WHERE idemprestimo = ?";
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, idEmprestimo);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                ItemEmprestimo itemEmprestimo = new ItemEmprestimo();
-                itemEmprestimo.setIdEmprestimo(resultSet.getInt("idemprestimo"));
-                itemEmprestimo.setIdLivro(resultSet.getInt("idlivro"));
-                itemEmprestimo.setDataPrevistaEntrega(resultSet.getDate("dataprevistaentrega"));
-                itemEmprestimo.setDataDevolucao(resultSet.getDate("datadevolucao"));
-
-                itensEmprestimo.add(itemEmprestimo);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return itensEmprestimo;
-    }
-
     public ItemEmprestimo findByIdLivroNaoDevolvido(int idLivro) {
         ItemEmprestimo itemEmprestimo = null;
         try {
